@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class WeatherForecastController {
 
-	@GetMapping("/weatherforecast")
+	@GetMapping("/api/v1/resources/weatherforecast")
 	@ResponseBody
 	public Map<String, String> todaysWeather(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
