@@ -1,5 +1,5 @@
-ARG BUILD_IMAGE=maven:3.6.3-jdk-8-slim
-ARG RUNTIME_IMAGE=openjdk:11-jdk-slim
+ARG BUILD_IMAGE=maven:3.6.3-jdk-8
+ARG RUNTIME_IMAGE=openjdk:11-jdk-alpine
 
 FROM ${BUILD_IMAGE} AS base
 WORKDIR /app
@@ -14,9 +14,6 @@ RUN mvn -f /home/app/pom.xml clean package
 #
 # package stage
 #
-FROM ${RUNTIME_IMAGE} 
-#RUN groupadd -g 1000 spring && useradd -u 1000 -G spring -s /bin/sh -D spring
-#RUN addgroup -S spring && adduser -S spring -G spring
-#USER spring:spring
+FROM ${RUNTIME_IMAGE} AS publish
 COPY --from=build /home/app/target/*.jar /home/app/app.jar
 ENTRYPOINT ["sh","-c","java -jar /home/app/app.jar"]
